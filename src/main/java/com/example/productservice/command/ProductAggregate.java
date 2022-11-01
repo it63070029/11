@@ -1,5 +1,6 @@
-package com.example.productservice.command.rest;
+package com.example.productservice.command;
 
+import com.example.productservice.command.CreateProductCommand;
 import com.example.productservice.core.event.ProductCreatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;

@@ -1,5 +1,6 @@
 package com.example.productservice.command.rest;
 
+import com.example.productservice.command.CreateProductCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
