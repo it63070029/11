@@ -1,5 +1,7 @@
 package com.example.productservice.command;
 
+import com.example.core.command.ReserveProductCommand;
+import com.example.core.event.ProductReservedEvent;
 import com.example.productservice.command.CreateProductCommand;
 import com.example.productservice.core.event.ProductCreatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
@@ -36,6 +38,19 @@ public class ProductAggregate {
         BeanUtils.copyProperties(command,event);
         AggregateLifecycle.apply(event);
     }
+
+    @CommandHandler
+    public void handler(ReserveProductCommand reserveProductCommand){
+        if(quantity < reserveProductCommand.getQuantity()){
+            throw  new IllegalArgumentException("Insufficient under of item in stock");
+        }
+        ProductReservedEvent productReservedEvent = ProductReservedEvent.builder()
+                .orderId(reserveProductCommand.getOrderId())
+                .productId(reserveProductCommand.getProductId())
+                .quantity(reserveProductCommand.getQuantity())
+                .userId(reserveProductCommand.getUserId())
+                .build();
+    }
     @EventSourcingHandler
     public void on(ProductCreatedEvent event){
         //Update State
@@ -45,5 +60,10 @@ public class ProductAggregate {
         this.quantity = event.getQuantity();
 
         System.out.println("On Product created : "+this.productId);
+    }
+
+    @EventSourcingHandler
+    public void on(ProductReservedEvent productReservedEvent){
+        this.quantity = productReservedEvent.getQuantity();
     }
 }
