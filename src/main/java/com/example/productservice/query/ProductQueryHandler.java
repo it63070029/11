@@ -19,7 +19,7 @@ public class ProductQueryHandler {
     }
 
     @QueryHandler
-    List<ProductRestModel> findProducs(FindProductQuery query){
+    List<ProductRestModel> findProducts(FindProductQuery query){
         List<ProductRestModel> models = new ArrayList<>();
         List<ProductEntity> entities = productRepository.findAll();
         for(ProductEntity entity:entities){
